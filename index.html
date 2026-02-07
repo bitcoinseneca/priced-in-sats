@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PRICED IN SATS — 90s Edition</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">
+        <div class="logo">PRICED IN SATS <span class="tag">STATIC • HTML/CSS/JS</span> <span class="blink">[LIVE]</span></div>
+        <div class="small mono" id="statusTop">Booting…</div>
+      </div>
+      <div class="marquee">
+        <span class="mono" id="ticker">Loading ticker…</span>
+      </div>
+    </div>
+
+    <!-- 1) SATS TABLE -->
+    <div class="grid">
+      <div class="panel">
+        <div class="satsHeroHead">
+          <h2 style="margin:0;">1) How Many Satoshis Are in a Bitcoin?</h2>
+          <div class="small mono">1 BTC = 100,000,000 sats (8 decimals)</div>
+        </div>
+
+        <hr class="hr"/>
+
+        <div class="satsGrid mono" role="table" aria-label="Sats to BTC conversion table">
+          <div class="satsRow satsRowHead">
+            <div>Satoshis</div><div class="eq">=</div><div>BTC</div>
+          </div>
+
+          <div class="satsRow"><div><span class="hot">1</span> sat</div><div class="eq">=</div><div>0.00000001 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">10</span> sats</div><div class="eq">=</div><div>0.00000010 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">100</span> sats</div><div class="eq">=</div><div>0.00000100 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">1,000</span> sats</div><div class="eq">=</div><div>0.00001000 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">10,000</span> sats</div><div class="eq">=</div><div>0.00010000 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">100,000</span> sats</div><div class="eq">=</div><div>0.00100000 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">1,000,000</span> sats</div><div class="eq">=</div><div>0.01000000 BTC</div></div>
+          <div class="satsRow"><div><span class="hot">10,000,000</span> sats</div><div class="eq">=</div><div>0.10000000 BTC</div></div>
+
+          <div class="satsRow satsRowLast">
+            <div><span class="hot">100,000,000</span> sats</div>
+            <div class="eq">=</div>
+            <div><span class="hot">1.00000000</span> BTC</div>
+          </div>
+        </div>
+
+        <div class="zerosNote mono">
+          <span class="brace"></span>
+          <span>There are <span class="hot">8</span> zeros</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2) FULL WIDTH: live + calculator + table -->
+    <div class="grid">
+      <div class="panel">
+        <h2>2) Live BTC → Fiat + BTC/Sats Calculator</h2>
+        <div class="small">CoinGecko public API (no key). Top 10 currencies. Type fiat/BTC/sats and it syncs.</div>
+
+        <hr class="hr"/>
+
+        <div class="row">
+          <div>
+            <label for="calcCurrency">Currency</label>
+            <select id="calcCurrency"></select>
+          </div>
+          <div class="small mono" id="calcStatus">loading…</div>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <div>
+            <label for="calcFiat">Fiat amount</label>
+            <input id="calcFiat" inputmode="decimal" placeholder="e.g., 100" />
+          </div>
+          <div>
+            <label for="calcBtc">Bitcoin (BTC)</label>
+            <input id="calcBtc" inputmode="decimal" placeholder="e.g., 0.001" />
+          </div>
+          <div>
+            <label for="calcSats">Satoshis (sats)</label>
+            <input id="calcSats" inputmode="decimal" placeholder="e.g., 100000" />
+          </div>
+          <div>
+            <button id="calcReset">RESET</button>
+          </div>
+        </div>
+
+        <div class="kpi three" style="margin-top:10px;">
+          <div class="box">
+            <div class="small">Bitcoin</div>
+            <div class="big mono" id="calcOutBtc">—</div>
+            <div class="small mono" id="calcOutBtc2">—</div>
+          </div>
+          <div class="box">
+            <div class="small">Satoshis</div>
+            <div class="big mono" id="calcOutSats">—</div>
+            <div class="small mono" id="calcOutSats2">—</div>
+          </div>
+          <div class="box">
+            <div class="small">Fiat value</div>
+            <div class="big mono" id="calcOutFiat">—</div>
+            <div class="small mono" id="calcOutFiat2">—</div>
+          </div>
+        </div>
+
+        <div class="small mono" style="margin-top:10px;">
+          <span>1 BTC = </span><span id="calcBtcPrice">—</span> <span id="calcCurLabel">USD</span>
+          <span> • </span>
+          <span id="calcSatsPerUnit">—</span> <span>sats per 1</span> <span id="calcCurLabel2">USD</span>
+        </div>
+
+        <hr class="hr"/>
+
+        <div class="row">
+          <div>
+            <label for="sortBy">Sort</label>
+            <select id="sortBy">
+              <option value="code">Currency code (A→Z)</option>
+              <option value="price_desc">BTC price (high→low)</option>
+              <option value="price_asc">BTC price (low→high)</option>
+              <option value="sats_desc">sats per 1 unit (high→low)</option>
+              <option value="sats_asc">sats per 1 unit (low→high)</option>
+            </select>
+          </div>
+          <div>
+            <button id="refreshAll">REFRESH</button>
+          </div>
+          <div class="small mono" id="liveMeta">…</div>
+        </div>
+
+        <hr class="hr"/>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Currency</th>
+              <th>BTC price</th>
+              <th>sats per 1 unit</th>
+              <th>fiat per 1 sat</th>
+            </tr>
+          </thead>
+          <tbody id="ratesBody">
+            <tr><td colspan="4" class="small">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3) CHART -->
+    <div class="grid">
+      <div class="panel">
+        <div class="chartHead">
+          <div>
+            <h2 style="margin:0 0 6px 0;">3) Sats-per-$1 + BTC price</h2>
+            <div class="small mono" id="chartRange">—</div>
+          </div>
+
+          <div class="chartControls">
+            <div class="seg">
+              <button class="segBtn isOn" data-days="30">30d</button>
+              <button class="segBtn" data-days="90">90d</button>
+              <button class="segBtn" data-days="180">180d</button>
+            </div>
+          </div>
+
+          <div class="chartKpi">
+            <div class="small mono" id="chartKpiTop">—</div>
+            <div class="big mono" id="chartKpiMain">—</div>
+            <div class="small mono" id="chartKpiSub">—</div>
+          </div>
+        </div>
+
+        <hr class="hr"/>
+
+        <div class="chartBox">
+          <canvas id="chartCanvas"></canvas>
+        </div>
+
+        <div class="chartLegend small mono" style="margin-top:8px;">
+          <span class="dot dotHot"></span> sats per <span id="chartCurA">USD</span> 1.00
+          <span style="opacity:.6"> • </span>
+          <span class="dot dotGray"></span> BTC price (<span id="chartCurB">USD</span>)
+        </div>
+
+        <div class="chartFoot small mono">
+          <div id="chartLowHighA">Sats low/high: —</div>
+          <div id="chartLowHighB">BTC low/high: —</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4) INDEX CARDS -->
+    <div class="grid">
+      <div class="panel">
+        <h2>4) Index Cards (edit amounts, everything becomes sats)</h2>
+        <div class="small">Convert any number into sats instantly. Fiat is the variable — sats are the unit.</div>
+
+        <hr class="hr"/>
+
+        <div class="cards" id="cards"></div>
+      </div>
+    </div>
+
+    <!-- 5) CAGR -->
+    <div class="grid">
+      <div class="panel">
+        <h2>5) CAGR + Targets (Old-School Calculator)</h2>
+
+        <div class="row">
+          <div>
+            <label for="startPrice">Start BTC price (USD)</label>
+            <input id="startPrice" />
+          </div>
+          <div>
+            <label for="endPrice">End BTC price (USD)</label>
+            <input id="endPrice" value="1000000" />
+          </div>
+          <div>
+            <label for="years">Years</label>
+            <input id="years" value="10" />
+          </div>
+          <div>
+            <button id="btnCagr">CALC</button>
+          </div>
+        </div>
+
+        <div class="kpi" style="margin-top:10px;">
+          <div class="box">
+            <div class="small">CAGR</div>
+            <div class="big mono" id="cagrOut">—</div>
+            <div class="small mono" id="cagrNotes">—</div>
+          </div>
+        </div>
+
+        <hr class="hr"/>
+
+        <h3>Projection Table (USD)</h3>
+        <div class="small">Uses CAGR to project BTC price + sats per $1.</div>
+
+        <div class="tableWrap" style="max-height:260px;">
+          <table>
+            <thead>
+              <tr><th>Year</th><th>BTC (USD)</th><th>sats per $1</th></tr>
+            </thead>
+            <tbody id="projBody">
+              <tr><td colspan="3" class="small">Run the calculator.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div><span class="ok">TIP:</span> Fiat is the variable. Sats are the unit.</div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
