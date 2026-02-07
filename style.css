@@ -1,3 +1,4 @@
+/* style.css */
 :root{
   --bg:#07090c;
   --fg:#eef2f7;
@@ -450,5 +451,145 @@ tbody tr:hover{
   .satsRow > div:nth-child(1),
   .satsRow > div:nth-child(2){
     border-right: 1px solid rgba(255,255,255,.08) !important;
+  }
+}
+
+/* ===========================
+   ✅ MOBILE / RESPONSIVE FIXES
+   =========================== */
+
+html { -webkit-text-size-adjust: 100%; }
+.wrap { width: 100%; }
+
+/* Make flex rows behave on narrow widths */
+.row > div{
+  flex: 1 1 220px;
+  min-width: 220px;
+}
+.row > div:last-child{
+  flex: 0 0 auto;
+}
+
+/* Inputs/selects fill columns */
+.row input,
+.row select{ width: 100%; }
+.row button{
+  width: 100%;
+  justify-content: center;
+}
+
+/* Tables: scroll instead of breaking layout */
+.tableWrap{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tableWrapWide table{
+  min-width: 680px;
+}
+
+/* Stop long numbers from forcing overflow */
+.mono{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Chart: better default size */
+#chartCanvas{ height: 220px; }
+
+/* Seg controls: keep inside box */
+.chartControls{ justify-self: center; }
+.seg{ max-width: 100%; }
+.segBtn{
+  white-space: nowrap;
+  padding: 10px 10px;
+}
+
+/* Ticker a bit tighter */
+.marquee{ padding-top: 8px; }
+.marqueeItem{ gap: 6px; }
+
+/* Phone layout */
+@media (max-width: 700px){
+  .wrap{ padding: 14px 12px 44px; }
+  .panel{ padding: 12px; }
+  .logo{ font-size: 16px; }
+  .tag{ margin-left: 6px; }
+
+  .chartHead{
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .chartKpi{
+    justify-self: start;
+    text-align: left;
+  }
+
+  .kpi.three{ grid-template-columns: 1fr; }
+
+  .kpi .big{
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  input, select, button{
+    padding: 12px 12px;
+    border-radius: 14px;
+  }
+
+  .zerosNote .brace{ width: 110px; }
+  #chartCanvas{ height: 260px; }
+}
+
+/* Ultra-small phones */
+@media (max-width: 420px){
+  .row > div{ min-width: 160px; }
+  .logo{ font-size: 15px; }
+  .tag{ font-size: 11px; }
+  .panel h2{ font-size: 15px; }
+}
+
+
+/* ✅ HARD FIX: stop section 2 from forcing extra width */
+.grid,
+.panel{
+  min-width: 0;            /* critical in flex/grid layouts */
+  max-width: 100%;
+}
+
+.panel *{
+  min-width: 0;            /* prevents children from blowing out the panel */
+}
+
+/* ✅ Make the rates table container never expand the panel */
+.tableWrap,
+.tableWrapWide{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ✅ Ensure the TABLE is what scrolls, not the whole panel */
+.tableWrapWide table{
+  width: 100%;
+  min-width: 680px;        /* keeps columns readable; scrolls on phones */
+}
+
+/* ✅ KPI + big numbers: allow wrapping instead of widening the panel */
+.kpi,
+.kpi .box{
+  min-width: 0;
+}
+.kpi .big,
+.kpi .small{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 700px){
+  .tableWrapWide table{
+    min-width: 560px;   /* tighter on phones */
   }
 }

@@ -1,3 +1,4 @@
+/* app.js */
 (() => {
   const SATS_PER_BTC = 100_000_000;
   const TOP10 = ["usd","eur","jpy","gbp","cny","cad","aud","chf","hkd","inr"];

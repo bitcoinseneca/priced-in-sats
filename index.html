@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -135,19 +136,22 @@
 
         <hr class="hr"/>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Currency</th>
-              <th>BTC price</th>
-              <th>sats per 1 unit</th>
-              <th>fiat per 1 sat</th>
-            </tr>
-          </thead>
-          <tbody id="ratesBody">
-            <tr><td colspan="4" class="small">Loading…</td></tr>
-          </tbody>
-        </table>
+        <!-- ✅ wrapped for mobile -->
+        <div class="tableWrap tableWrapWide">
+          <table>
+            <thead>
+              <tr>
+                <th>Currency</th>
+                <th>BTC price</th>
+                <th>sats per 1 unit</th>
+                <th>fiat per 1 sat</th>
+              </tr>
+            </thead>
+            <tbody id="ratesBody">
+              <tr><td colspan="4" class="small">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
